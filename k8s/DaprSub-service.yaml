@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\KomposeTool\kompose.exe convert
+    kompose.service.type: LoadBalancer
+    kompose.version: 1.4.0 (c7964e7)
+  labels:
+    io.kompose.service: daprsub
+  name: daprsub
+spec:
+  ports:
+  - name: "80"
+    port: 5045
+    targetPort: 80
+  selector:
+    io.kompose.service: daprsub
+  type: LoadBalancer
+status:
+  loadBalancer: {}

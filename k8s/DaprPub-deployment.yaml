@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\KomposeTool\kompose.exe convert
+    kompose.service.type: LoadBalancer
+    kompose.version: 1.4.0 (c7964e7)
+  labels:
+    io.kompose.service: daprpub
+  name: daprpub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: daprpub
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: daprpub
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "daprpub"
+        dapr.io/app-port: "80"
+    spec:
+      containers:
+      - image: venkateshsrini3/daprpub
+        name: daprpub
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+status: {}

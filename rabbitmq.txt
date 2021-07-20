@@ -1,0 +1,1 @@
+AMQP connection string :- amqp://user:kWKVbjE8zh@rabbitmq:5672/
