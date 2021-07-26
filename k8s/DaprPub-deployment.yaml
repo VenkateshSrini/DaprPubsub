@@ -28,6 +28,9 @@ spec:
         name: daprpub
         ports:
         - containerPort: 80
+        env:
+        - name: Logging__LogLevel__Microsoft
+          value: Debug
         resources: {}
       restartPolicy: Always
 status: {}
