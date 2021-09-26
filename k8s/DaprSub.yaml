@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: daprsub
+    service: daprsub
+  name: daprsub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: daprsub
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: daprsub
+        service: daprsub
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "daprsub"
+        dapr.io/app-port: "80"
+    spec:
+      containers:
+      - image: test/sub-api:latest
+        imagePullPolicy: IfNotPresent
+        name: daprsub
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: daprsub
+  labels:
+    app: daprsub
+    service: daprsub
+spec:
+  type: NodePort
+  ports:
+  - name: "http"
+    port: 5045
+    targetPort: 80
+  selector:
+    service: daprsub

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: daprpub
+    service: daprpub
+  name: daprpub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: daprpub
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: daprpub
+        app: daprpub
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "daprpub"
+        dapr.io/app-port: "80"
+    spec:
+      containers:
+      - image: test/pub-api:latest
+        imagePullPolicy: IfNotPresent
+        name: daprpub
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+        env:
+        - name: Logging__LogLevel__Microsoft
+          value: Debug
+
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: daprpub
+    app: daprpub
+  name: daprpub
+spec:
+  type: NodePort
+  ports:
+  - name: "http"
+    port: 5045
+    targetPort: 80
+  selector:
+    service: daprpub
