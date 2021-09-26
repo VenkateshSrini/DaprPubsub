@@ -8,6 +8,6 @@ namespace DaprPub
     public static class Constant
     {
         public const string PUBSUB_NAME = "rabbitmqbus";
-        public const string QUEUE_NAME = "dpar_queue";
+        public const string QUEUE_NAME = "dapr_queue";
     }
 }
